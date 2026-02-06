@@ -32,8 +32,8 @@
         <header class="header">
             <h1>Browse Movies</h1>
             <div class="search__engine">
-                <input class="search__bar" type="text" placeholder="Search your favorite movie or genre"> 
-                <button class="search__btn">
+                <input class="search__bar" type="text" id="searchValue" placeholder="Search your favorite movie or genre"> 
+                <button id="searchButton" class="search__btn">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
@@ -48,8 +48,26 @@
                         <input type="text" placeholder="filter search results">
                     </div>
                 </div>
-                <ul class="movie__list">
-                    <li class="movie">
+                <div class="movie__list">
+                    <div class="movie">
+                        <div class="movie__poster">
+                            <div class="movie__wrapper">
+                                <img src="./assets/undraw_movie-night_pkvp.svg" alt="">
+                                <p class="see-more">See More</p>
+                            </div>
+                        </div>
+                        <div class="movie__description">
+                                <h3 class="movie__title">Movie Title</h3>
+                                <p class="year">2017</p>
+                                <!-- <div class="movie__info">
+                                    <p class="year">2017</p>
+                                    <p class="duration">82 min</p>
+                                    <p class="rating">PG</p>
+                                    <p class="reviews">*****</p>
+                                </div> -->
+                        </div>
+                    </div>
+                    <!-- <li class="movie">
                         <div class="movie__wrapper">
                             <img src="./assets/undraw_movie-night_pkvp.svg" alt="">
                             <p class="see-more">See More</p>
@@ -123,23 +141,8 @@
                                     <p class="reviews">*****</p>
                                 </div>
                         </div>
-                    </li>
-                    <li class="movie">
-                        <div class="movie__wrapper">
-                            <img src="./assets/undraw_movie-night_pkvp.svg" alt="">
-                            <p class="see-more">See More</p>
-                        </div>
-                        <div class="movie__description">
-                                <h3 class="movie__title">Movie Title</h3>
-                                <div class="movie__info">
-                                    <p class="year">2017</p>
-                                    <p class="duration">82 min</p>
-                                    <p class="rating">PG</p>
-                                    <p class="reviews">*****</p>
-                                </div>
-                        </div>
-                    </li>
-                </ul>
+                    </li> -->
+                </div>
             </div>
         </div>
     </section>

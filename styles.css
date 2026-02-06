@@ -159,7 +159,7 @@ MOVIES
 }
 
 .movie {
-    width: 28%;
+    width: calc(100/3);
     padding: 24px 0;
 }
 
@@ -173,6 +173,10 @@ MOVIES
     margin-bottom: 8px;
     transition: all 300ms ease;
     position: relative;
+}
+
+.movie__description {
+    width: 100%;
 }
 
 .movie__wrapper:hover {
