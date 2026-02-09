@@ -4,22 +4,6 @@
 // const posterApiUrl = 'http://www.omdbapi.com/?s=batman&apikey=f311a7ce'
 // //'http://img.omdbapi.com/?i=tt3896198&apikey=f311a7ce'
 
-// // async function getPosters() {
-// //     try {
-// //         const response = await fetch(apiUrl)
-// //         if (!response.ok) {
-// //                 throw new Error('Network response not ok' + response.statusText)
-// //             }
-// //         const data = await response.json()
-// //         console.log(data)
-// //     }
-// //     catch (error) {
-// //         console.error('Problem with fetch operation:', error)
-// //     }
-// // }
-
-// // getPosters()
-
 // const movieListEl = document.querySelector(".movie")
 
 // async function main() {
@@ -77,17 +61,19 @@ function fetchData(idToReplace) {
 
 function movieHTML(movie) {
     return `
-        <div class="movie__poster">
-            <div class="movie__wrapper">
-                <img src="${movie.Poster}" alt="">
-                <p class="see-more">See More</p>
-            </div>
+        <div class="movie__wrapper">
+            <img src="${movie.Poster}" alt="">
+            <p class="see-more">See More</p>
         </div>
         <div class="movie__description">
             <h3 class="movie__title">${movie.Title}</h3>
             <p class="year">${movie.Year}</p>
         </div>
     `
+}
+
+function renderMovies(filter) {
+
 }
 
 // async function fetchMovies(idToReplace) {
@@ -118,3 +104,4 @@ function movieHTML(movie) {
 // }
 
 // fetchMovies(idToReplace)
+
