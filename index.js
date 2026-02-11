@@ -4,19 +4,6 @@
 // const posterApiUrl = 'http://www.omdbapi.com/?s=batman&apikey=f311a7ce'
 // //'http://img.omdbapi.com/?i=tt3896198&apikey=f311a7ce'
 
-// const movieListEl = document.querySelector(".movie")
-
-// async function main() {
-//     const movies = await fetch(`https://www.omdbapi.com/?s=${searchValue}=f311a7ce`)
-//     const moviesData = await movies.json()
-//     console.log(moviesData)
-//     movieListEl.innerHTML = moviesData.Search
-//         .map((movie) => movieHTML(movie))
-//         .join("")
-// }
-
-// main()
-
 
 const searchValue = document.getElementById('searchValue')
 const searchButton = document.getElementById('searchButton')
@@ -62,46 +49,54 @@ function fetchData(idToReplace) {
 function movieHTML(movie) {
     return `
         <div class="movie__wrapper">
-            <img src="${movie.Poster}" alt="">
+            <img src="${movie.Poster}" alt="" class="movie__img">
             <p class="see-more">See More</p>
-        </div>
-        <div class="movie__description">
-            <h3 class="movie__title">${movie.Title}</h3>
-            <p class="year">${movie.Year}</p>
+            <div class="movie__description">
+                <h3 class="movie__title">${movie.Title}</h3>
+                <p class="year">${movie.Year}</p>
+            </div>
         </div>
     `
 }
 
-function renderMovies(filter) {
+async function renderMovies(filter) {
+    const moviesWrapper = document.querySelector('.movies__loading-state')
 
+    moviesWrapper.classList += ' movies__loading'
+    if (!movies) {
+        movies = await fetchData(idToReplace)
+    }
+
+    moviesWrapper.classList.remove('movies__loading')
+
+    if (filter === 'ALPHABETICAL') {
+        const filteredMovies = movies.sort((a, b) => a.Title.localeCompare(b.Title))
+    }
+    else if (filter === 'YEAR') {
+        movies.sort((a, b) => b.Year - a.Year)
+    }
+
+    const moviesHtml = movies.map((movie) => {
+        return `
+        <div class="movie__wrapper">
+            <img src="${movie.Poster}" alt="" class="movie__img">
+            <p class="see-more">See More</p>
+            <div class="movie__description">
+                <h3 class="movie__title">${movie.Title}</h3>
+                <p class="year">${movie.Year}</p>
+            </div>
+        </div>
+    ` 
+    }).join("")
+
+    moviesWrapper.innerHTML = moviesHtml
 }
 
-// async function fetchMovies(idToReplace) {
-//     const baseURL = `https://www.omdbapi.com/?s=`
-//     const endpoint = `&apikey=f311a7ce`
-//     const apiURL = `${baseURL}${encodeURIComponent(idToReplace)}${endpoint}`
+function filterMovies(event) {
+    renderMovies(event.target.value)
+}
 
-//     const moviesData = await response.json()
-
-//     try {
-//         const response = await fetch(apiURL)
-//         if (!response.ok) {
-//             throw new Error ('Network response invalid')
-//         }
-        
-//     } catch (error) {
-//         movies.innerHTML = `<p> No results matched your criteria </p>`
-//         console.error('There was a problem with the fetch operation', error)
-//     }
-
-//     console.log(moviesData)
-//     // let movieListEl = document.querySelector(".movie")
-//     // movieListEl.innerHTML = moviesData.Search
-//     //     .map((movie) => movieHTML(movie))
-//     //     .join("")
-
-    
-// }
-
-// fetchMovies(idToReplace)
+// setTimeout(() => {
+//     renderMovies()
+// })
 

@@ -32,7 +32,7 @@
         <header class="header">
             <h1>Browse Movies</h1>
             <div class="search__engine">
-                <input class="search__bar" type="text" id="searchValue" placeholder="Search your favorite movie or genre"> 
+                <input class="search__bar" type="text" id="searchValue" placeholder="Search your favorite movie by title"> 
                 <button id="searchButton" class="search__btn">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
@@ -42,19 +42,24 @@
     <section id="movies">
         <div class="container">
             <div class="row">
-                <div class="search__results">
+                <div class="results__filter">
                     <h2>Search results: </h2>
-                    <div class="sort">
-                        <input type="text" placeholder="filter search results">
-                    </div>
+                    <select class="sort__bar" name="" id="filter" onchange="filterMovies(event)">
+                        <option value="" disabled selected>Sort</option>
+                        <!-- <option value="RATING">Rating, High to Low</option> -->
+                        <option value="ALPHABETICAL">A-Z by Title</option>
+                        <option value="YEAR">Year, New to Old</option>
+                    </select>
+                </div>    
+                <div class="movies__loading-state">
+                    <i class="fa-solid fa-compact-disc"></i>
                 </div>
                 <div class="movie__list">
                     <div class="movie">
                         <div class="movie__wrapper">
                             <img src="./assets/undraw_movie-night_pkvp.svg" alt="" class="movie__img">
                             <p class="see-more">See More</p>
-                        </div>
-                        <div class="movie__description">
+                            <div class="movie__description">
                                 <h3 class="movie__title">Movie Title</h3>
                                 <p class="year">2017</p>
                                 <!-- <div class="movie__info">
@@ -63,6 +68,7 @@
                                     <p class="rating">PG</p>
                                     <p class="reviews">*****</p>
                                 </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
