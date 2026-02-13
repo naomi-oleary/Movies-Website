@@ -12,7 +12,6 @@ searchButton.addEventListener('click', async () => {
 
   await fetchData(searchTerm);
   renderMovies();
-  // hideDisc()
 });
 
 async function fetchData(searchTerm) {
