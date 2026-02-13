@@ -1,49 +1,31 @@
-// http://www.omdbapi.com/?i=tt3896198&apikey=f311a7ce - Omdb API
-// f311a7ce - my API key
-
-// const posterApiUrl = 'http://www.omdbapi.com/?s=batman&apikey=f311a7ce'
-// //'http://img.omdbapi.com/?i=tt3896198&apikey=f311a7ce'
-
-
 const searchValue = document.getElementById('searchValue')
 const searchButton = document.getElementById('searchButton')
 const resultsArea = document.getElementById('movies')
+let movies = [];
 
-searchButton.addEventListener('click', () => {
-    const searchTerm = searchValue.value
-    if (searchTerm) {
-        fetchData(searchTerm)
-    }
-    else {
-        movies.innerHTML = '<p>Please enter a search item.</p>'
-    }
-})
+searchButton.addEventListener('click', async () => {
+  const searchTerm = searchValue.value;
+  placeholder.classList.add("hidden")
 
-function fetchData(idToReplace) {
-    const baseURL = `https://www.omdbapi.com/?s=`
-    const endpoint = `&apikey=f311a7ce`
-    const apiURL = `${baseURL}${encodeURIComponent(idToReplace)}${endpoint}`
+  showDisc()
+  if (!searchTerm) return;
 
+  await fetchData(searchTerm);
+  renderMovies();
+  // hideDisc()
+});
 
-    fetch(apiURL)
-        .then(movies => {
-            const movieListEl = document.querySelector(".movie")
-            if (!movies.ok) {
-                throw new Error ('Network response invalid: ' + response.statusText)
-            }
-            return movies.json()
-            console.log(movies.json)
-        })
-        .then(movies => {
-            let movieListEl = document.querySelector(".movie")
-            movieListEl.innerHTML = movies.Search
-                .map((movie) => movieHTML(movie))
-                .join("")
-        })
-        .catch(error => {
-            movies.innerHTML = `<p> No results matched your criteria </p>`
-            console.error('There was a problem with the fetch operation', error)
-        })
+async function fetchData(searchTerm) {
+  showDisc();
+
+  await new Promise(resolve => {
+    setTimeout(resolve, 1200)
+  })
+
+  const response = await fetch(`https://www.omdbapi.com/?s=${searchTerm}&apikey=f311a7ce`);
+  const data = await response.json();
+  movies = data.Search || []
+  return movies;
 }
 
 function movieHTML(movie) {
@@ -60,43 +42,40 @@ function movieHTML(movie) {
 }
 
 async function renderMovies(filter) {
-    const moviesWrapper = document.querySelector('.movies__loading-state')
+    let filteredMovies = [...movies];
 
-    moviesWrapper.classList += ' movies__loading'
-    if (!movies) {
-        movies = await fetchData(idToReplace)
-    }
 
-    moviesWrapper.classList.remove('movies__loading')
+   if (filter === 'ALPHABETICAL') {
+    filteredMovies.sort((a, b) =>
+      a.Title.localeCompare(b.Title)
+    );
+  }
 
-    if (filter === 'ALPHABETICAL') {
-        const filteredMovies = movies.sort((a, b) => a.Title.localeCompare(b.Title))
-    }
-    else if (filter === 'YEAR') {
-        movies.sort((a, b) => b.Year - a.Year)
-    }
-
-    const moviesHtml = movies.map((movie) => {
-        return `
-        <div class="movie__wrapper">
-            <img src="${movie.Poster}" alt="" class="movie__img">
-            <p class="see-more">See More</p>
-            <div class="movie__description">
-                <h3 class="movie__title">${movie.Title}</h3>
-                <p class="year">${movie.Year}</p>
-            </div>
-        </div>
-    ` 
-    }).join("")
-
-    moviesWrapper.innerHTML = moviesHtml
+  if (filter === 'YEAR') {
+    filteredMovies.sort((a, b) =>
+      b.Year - a.Year
+    );
+  }
+  document.querySelector('.movie').innerHTML =
+    filteredMovies.map(movieHTML).join("");
+  hideDisc()
 }
 
 function filterMovies(event) {
     renderMovies(event.target.value)
+    hideDisc()
 }
 
-// setTimeout(() => {
-//     renderMovies()
-// })
+const disc = document.getElementById("movies__loading-state")
+const content = document.getElementById("movies__body")
+const placeholder = document.getElementById("default__browser-img")
 
+function showDisc() {
+  placeholder.classList.add("hidden")
+  disc.classList.remove("hidden")
+}
+
+function hideDisc() {
+  disc.classList.add("hidden")
+  content.classList.remove("hidden")
+}

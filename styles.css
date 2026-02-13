@@ -225,6 +225,33 @@ MOVIES
     justify-content: space-between;
 }
 
+.default__browser-img {
+    margin-top: 200px;
+}
+
+.fa-compact-disc {
+    font-size: 72px;
+    animation: spin 1s linear infinite;
+    z-index: 10;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
 /*
 
 FOOTER
